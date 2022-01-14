@@ -1,15 +1,15 @@
 import React, {useState, FC} from 'react'
 
 export const PublicIpForm: FC = ( props ) => {
-  const [state, setState] = useState({value: ""})
   const choices = ["有効", "無効"] 
+  const [state, setState] = useState({value: choices[0]})
   const handleChange = (event:any) => {
     setState({value: event.target.value})
   }
 
 
   return (
-    <form className="py-4">
+    <>
       <label>
         パブリックIPアドレス: 
         <select value={state.value} onChange={handleChange} >
@@ -18,6 +18,6 @@ export const PublicIpForm: FC = ( props ) => {
           )}
         </select>
       </label>
-    </form>
+    </>
   );
 }

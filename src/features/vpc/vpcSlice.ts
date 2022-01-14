@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../../app/store'
-import counterSlice from '../counter/counterSlice'
 
-interface vpcNameState {
-  name: string;
+
+interface VpcNameState {
+  value: string
 }
 
-const initialState: vpcNameState = {
-  name: "exampleVPC"
+const initialState:VpcNameState = {
+  value: "exampleVpc",
 }
 
 export const vpcSlice = createSlice({
@@ -15,13 +15,13 @@ export const vpcSlice = createSlice({
   initialState,
   reducers: {
     saveVpcName: (state, action: PayloadAction<string>) => {
-      state.name = action.payload
+      state.value = action.payload
     },
   },
 })
 
-export const { saveVpcName } = counterSlice.actions
+export const { saveVpcName } = vpcSlice.actions
 
-export const selectCount = (state: RootState) => state.vpcName.name
+export const customVpcName = (state: RootState) => state.vpcName.value
 
 export default vpcSlice.reducer
