@@ -31,6 +31,7 @@ export const Vpc: FC = (props) => {
         <SubnetCidrBlockForm />
         <br />
         <PublicIpForm />
+        <br />
         <button
           onClick={handleSubmit}>
           設定

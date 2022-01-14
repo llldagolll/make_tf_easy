@@ -41,10 +41,10 @@ export const VpcNameForm: FC = (props) => {
         name="yourVpcName"
         onChange={(e) => setYourVpcName(e.target.value)}
       />
-      <button
+      {/* <button
         onClick={handleSubmit}>
         設定
-        </button>
+        </button> */}
     </>
   );
   }
