@@ -102,6 +102,17 @@ export const Home: VFC = () => {
             });
     }
 
+    const testMakeFile = () => {
+        axios
+        .get('http://localhost:5000/tf/testMakeFile')             //リクエストを飛ばすpath
+        .then(response => {
+            console.log(response.data);
+        })                               //成功した場合、postsを更新する（then）
+        .catch(() => {
+            console.log('通信に失敗しました');
+        });               
+    }
+
     return (
         <div className="homePage">
             <div className="wrapper">
@@ -120,6 +131,7 @@ export const Home: VFC = () => {
             <div className="buttonArea">
                 {/* <button onClick={handleSaveData}>保存</button> */}
                 <button onClick={sendAllData}>送信</button>
+                <button onClick={testMakeFile}>test</button>
                 {/* <a href="#" id="getLocal" onClick={makeTextFile}>ダウンロード</a> */}
             </div>
         </div>
