@@ -87,7 +87,6 @@ export const Home: VFC = () => {
     // }
 
     const sendAllData = () => {
-
         const [objVpcData, objSubnetData] = convertObjData();
         axios.post('http://localhost:5000/tf/postAllData', {
             withCredentials: true,
@@ -102,7 +101,7 @@ export const Home: VFC = () => {
             });
     }
 
-    const testMakeFile = () => {
+    const consoleTestFile = () => {
         axios
         .get('http://localhost:5000/tf/testMakeFile')             //リクエストを飛ばすpath
         .then(response => {
@@ -113,10 +112,26 @@ export const Home: VFC = () => {
         });               
     }
 
-    const makeTf = () => {
-
+    const consoleTf = () => {
         const [objVpcData, objSubnetData] = convertObjData();
-        axios.post('http://localhost:5000/tf/makeTf', {
+        axios.post('http://localhost:5000/tf/consoleTf', {
+            withCredentials: true,
+            vpc: objVpcData,
+            subnet: objSubnetData
+            })
+            .then(function (response) {
+            console.log(response);
+            })
+            .catch(function (error) {
+            console.log(error);
+            });
+    }
+
+
+
+    const MakeTestFile = () => {
+        const [objVpcData, objSubnetData] = convertObjData();
+        axios.post('http://localhost:5000/tf/MakeTestFile', {
             withCredentials: true,
             vpc: objVpcData,
             subnet: objSubnetData
@@ -147,8 +162,9 @@ export const Home: VFC = () => {
             <div className="buttonArea">
                 {/* <button onClick={handleSaveData}>保存</button> */}
                 <button onClick={sendAllData}>送信</button>
-                <button onClick={testMakeFile}>testMakeFile</button>
-                <button onClick={makeTf}>makeTf</button>
+                <button onClick={consoleTestFile}>testMakeFile</button>
+                <button onClick={consoleTf}>consoleTf</button>
+                <button onClick={MakeTestFile}>MakeTestFile</button>
                 {/* <a href="#" id="getLocal" onClick={makeTextFile}>ダウンロード</a> */}
             </div>
         </div>
