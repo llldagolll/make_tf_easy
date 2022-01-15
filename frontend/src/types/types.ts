@@ -1,10 +1,10 @@
 export type Vpc = {
     name: string
-    ciderBlock: string
+    cidrBlock: string
 }
 
 export type Subnet = {
-        ciderBlock: string
+        cidrBlock: string
         availabilityZone: string
         isPublicIp: string
     }

@@ -1,6 +1,3 @@
-const vpcName = ""
-const cidrBlock = ""
-
 exports.vpc = (vpcName, cidrBlock) => `
 resource "aws_vpc" "${vpcName}" {
   cidr_block           = "${cidrBlock}"
@@ -9,8 +6,6 @@ resource "aws_vpc" "${vpcName}" {
   enable_dns_support   = true
 }
 `;
-
-
 
 
 exports.subnet = (vpcName, subnetCidrBlock, availabilityZone, publicIpOnLaunch) => `

@@ -12,11 +12,11 @@ export const Home: VFC = () => {
 
     const [vpcData, setVpcData] = useState<Vpc>({
         name: "",
-        ciderBlock: ""
+        cidrBlock: ""
     })
 
     const [subnetData, setSubnetData] = useState<Subnet>({
-        ciderBlock: "",
+        cidrBlock: "",
         availabilityZone: "",
         isPublicIp: ""
     })
@@ -113,17 +113,33 @@ export const Home: VFC = () => {
         });               
     }
 
+    const makeTf = () => {
+
+        const [objVpcData, objSubnetData] = convertObjData();
+        axios.post('http://localhost:5000/tf/makeTf', {
+            withCredentials: true,
+            vpc: objVpcData,
+            subnet: objSubnetData
+            })
+            .then(function (response) {
+            console.log(response);
+            })
+            .catch(function (error) {
+            console.log(error);
+            });
+    }
+
     return (
         <div className="homePage">
             <div className="wrapper">
                 <div className="container">
                 <h2>VPCの設定</h2>
-                    <FormControl stateKey="ciderBlock" value={vpcData.ciderBlock} label="CIDR BLOCK:" placeholder="10.0.0.0/16" name="ciderBlock" className="formControl" onChange={handleChangeVpc}  />
+                    <FormControl stateKey="cidrBlock" value={vpcData.cidrBlock} label="CIDR BLOCK:" placeholder="10.0.0.0/16" name="cidrBlock" className="formControl" onChange={handleChangeVpc}  />
                     <FormControl stateKey="name" value={vpcData.name} label="VPC NAME:" placeholder="exampleVPC" name="yourVpcName" onChange={handleChangeVpc} className="formControl" />
                 </div>
                 <div className="container">
                 <h2>Subnetの設定</h2>
-                    <FormControl stateKey="ciderBlock" value={subnetData.ciderBlock} label="CIDR BLOCK:" placeholder="10.0.0.0/24" name="ciderBlock" className="formControl" onChange={handleChangeSubnet}  />
+                    <FormControl stateKey="cidrBlock" value={subnetData.cidrBlock} label="CIDR BLOCK:" placeholder="10.0.0.0/24" name="cidrBlock" className="formControl" onChange={handleChangeSubnet}  />
                     <Select stateKey="availabilityZone" label="AvailabilityZone:" options={azList} value={subnetData.availabilityZone} onChange={handleChangeSubnet} />
                     <Select stateKey="isPublicIp" label="PublicIpOnLaunch:" options={isPublicIp} value={subnetData.isPublicIp} onChange={handleChangeSubnet} />
                 </div>
@@ -131,7 +147,8 @@ export const Home: VFC = () => {
             <div className="buttonArea">
                 {/* <button onClick={handleSaveData}>保存</button> */}
                 <button onClick={sendAllData}>送信</button>
-                <button onClick={testMakeFile}>test</button>
+                <button onClick={testMakeFile}>testMakeFile</button>
+                <button onClick={makeTf}>makeTf</button>
                 {/* <a href="#" id="getLocal" onClick={makeTextFile}>ダウンロード</a> */}
             </div>
         </div>
