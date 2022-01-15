@@ -4,6 +4,8 @@ const tf = require('../templates/tf.js')
 const fs = require('fs');
 
 
+const txtDir = './txt'
+
 router.get('/', function (req, res, next) {
   res.send('hello')
 })
@@ -72,6 +74,8 @@ router.post('/MakeTestFile', function (req, res, next) {
   // const availabilityZone = "ap-northeast-1a"
   // const publicIpOnLaunch = "true"
 
+  console.log("request-----------------" + req.body.vpc.name)
+
   const [
     vpcName,
     vpcCidrBlock,
@@ -89,20 +93,25 @@ router.post('/MakeTestFile', function (req, res, next) {
 
   // console.log(tf.vpc(vpcName, vpcCidrBlock));
   // console.log(tf.subnet(vpcName, subnetCidrBlock, availabilityZone, publicIpOnLaunch));
+  console.log("--------------------------"+vpcName)
 
   const vpc = tf.vpc(vpcName, vpcCidrBlock);
   const subnet = tf.subnet(vpcName, subnetCidrBlock, availabilityZone, publicIpOnLaunch);
+  console.log(vpc)
+  console.log(subnet)
 
   const terraformFile = vpc + subnet
   console.log(terraformFile)
 
-  fs.writeFile('tf.txt', terraformFile, function (err) {
-    if (err) { throw err; }
-    console.log('tf.txtが作成されました');
-});
+//   fs.writeFile(`${txtDir}/tf.txt`, terraformFile, function (err) {
+//     if (err) { throw err; }
+//     console.log('tf.txtが作成されました');
+// });
 
   
-  res.send('success MakeTestFile api ')
+  // res.send('success MakeTestFile api ')
+  res.header('Content-Type', 'text/plain;charset=utf-8');
+  res.end(terraformFile);
 })
 
 module.exports = router;

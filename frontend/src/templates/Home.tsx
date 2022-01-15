@@ -46,6 +46,7 @@ export const Home: VFC = () => {
     }
 
     const convertObjData = ():Array<Object> => {
+        handleSaveData();
         const vpcData = localStorage.getItem('vpc');
         const subnetData = localStorage.getItem('subnet');
         const objVpcData:any  = JSON.parse(vpcData!)
@@ -114,6 +115,7 @@ export const Home: VFC = () => {
 
     const consoleTf = () => {
         const [objVpcData, objSubnetData] = convertObjData();
+        console.log(objVpcData, objSubnetData)
         axios.post('http://localhost:5000/tf/consoleTf', {
             withCredentials: true,
             vpc: objVpcData,
@@ -136,12 +138,34 @@ export const Home: VFC = () => {
             vpc: objVpcData,
             subnet: objSubnetData
             })
-            .then(function (response) {
-            console.log(response);
+            .then(function (response: any) {
+                console.log(response.data);
+                makeFile(response.data);
             })
             .catch(function (error) {
-            console.log(error);
+                console.log(error);
             });
+
+    }
+
+
+    const makeFile = (terraformText: string) => {
+        const title = 'main.tf';
+        const blobType = 'text/plain';
+
+        const linkTagId = 'getLocal';
+        const linkTag = document.getElementById(linkTagId);
+        const linkTagAttr = ['href', 'download'];
+
+        // const string = "hello"
+
+        const msSave = window.navigator;
+
+        const stringObject = new Blob([terraformText], { type: blobType });
+        const objectURL = window.URL.createObjectURL(stringObject)
+
+        linkTag?.setAttribute(linkTagAttr[0], objectURL)
+        linkTag?.setAttribute(linkTagAttr[1], title)
     }
 
     return (
@@ -165,7 +189,7 @@ export const Home: VFC = () => {
                 <button onClick={consoleTestFile}>testMakeFile</button>
                 <button onClick={consoleTf}>consoleTf</button>
                 <button onClick={MakeTestFile}>MakeTestFile</button>
-                {/* <a href="#" id="getLocal" onClick={makeTextFile}>ダウンロード</a> */}
+                <a href="#" id="getLocal" onClick={MakeTestFile}>ダウンロード</a>
             </div>
         </div>
     )
