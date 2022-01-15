@@ -53,12 +53,13 @@ router.post('/consoleTf', function (req, res, next) {
       req.body.vpc.name,
       req.body.vpc.cidrBlock,
       req.body.subnet.cidrBlock,
-      req.body.availabilityZone,
-      req.body.isPublicIp
+      req.body.subnet.availabilityZone,
+      req.body.subnet.isPublicIp
     ]
-
-  console.log(tf.vpc(vpcName, vpcCidrBlock));
-  console.log(tf.subnet(vpcName, subnetCidrBlock, availabilityZone, publicIpOnLaunch));
+  
+  console.log(req.body.subnet)
+  // console.log(tf.vpc(vpcName, vpcCidrBlock));
+  // console.log(tf.subnet(vpcName, subnetCidrBlock, availabilityZone, publicIpOnLaunch));
 
   console.log("end POST------------------------------------")
   
@@ -74,7 +75,6 @@ router.post('/MakeTestFile', function (req, res, next) {
   // const availabilityZone = "ap-northeast-1a"
   // const publicIpOnLaunch = "true"
 
-  console.log("request-----------------" + req.body.vpc.name)
 
   const [
     vpcName,
@@ -86,19 +86,18 @@ router.post('/MakeTestFile', function (req, res, next) {
       req.body.vpc.name,
       req.body.vpc.cidrBlock,
       req.body.subnet.cidrBlock,
-      req.body.availabilityZone,
-      req.body.isPublicIp
+      req.body.subnet.availabilityZone,
+      req.body.subnet.isPublicIp
     ]
 
 
   // console.log(tf.vpc(vpcName, vpcCidrBlock));
   // console.log(tf.subnet(vpcName, subnetCidrBlock, availabilityZone, publicIpOnLaunch));
-  console.log("--------------------------"+vpcName)
 
   const vpc = tf.vpc(vpcName, vpcCidrBlock);
   const subnet = tf.subnet(vpcName, subnetCidrBlock, availabilityZone, publicIpOnLaunch);
-  console.log(vpc)
-  console.log(subnet)
+  // console.log(vpc)
+  // console.log(subnet)
 
   const terraformFile = vpc + subnet
   console.log(terraformFile)

@@ -31,6 +31,7 @@ export const Home: VFC = () => {
 
     const handleChangeSubnet = (e: any, key: string) => {
         e.preventDefault()
+        console.log(subnetData)
         setSubnetData({
             ...subnetData,
             [key]: e.target.value
@@ -43,6 +44,7 @@ export const Home: VFC = () => {
 
         localStorage.setItem('vpc', vpcDataForLocalStorage)
         localStorage.setItem('subnet', subnetDataForLocalStorage)
+        console.log(localStorage.getItem('subnet'));
     }
 
     const convertObjData = ():Array<Object> => {
