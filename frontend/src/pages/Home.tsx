@@ -40,44 +40,6 @@ export const Home: VFC = () => {
         })
     }
 
-    const handleSaveData = () => {
-        const vpcDataForLocalStorage = JSON.stringify(vpcData)
-        const subnetDataForLocalStorage = JSON.stringify(subnetData)
-
-        localStorage.setItem('vpc', vpcDataForLocalStorage)
-        localStorage.setItem('subnet', subnetDataForLocalStorage)
-        console.log(localStorage.getItem('subnet'));
-    }
-
-    const convertObjData = ():Array<Object> => {
-        handleSaveData();
-        const vpcData = localStorage.getItem('vpc');
-        const subnetData = localStorage.getItem('subnet');
-        const objVpcData:any  = JSON.parse(vpcData!)
-        const objSubnetData:any  = JSON.parse(subnetData!)
-
-        return [objVpcData, objSubnetData]
-    }
-
-
-
-    const MakeTestFile = () => {
-        const [objVpcData, objSubnetData] = convertObjData();
-        axios.post('http://localhost:5000/tf/MakeTestFile', {
-            withCredentials: true,
-            vpc: objVpcData,
-            subnet: objSubnetData
-            })
-            .then(function (response: any) {
-                console.log(response.data);
-                makeFile(response.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-
-    }
-
 
     const makeFile = (terraformText: string) => {
         const title = 'main.tf';
@@ -134,28 +96,6 @@ export const Home: VFC = () => {
         makeFile(terraformText)
     }
 
-    // const makeTerraformFile = () => {
-    //     const [objVpcData, objSubnetData] = convertObjData();
-        
-    //     // const subnetInfo = makeSubnetInfo(objVpcData.name, subnetCidrBlock, availabilityZone, publicIpOnLaunch)
-    //     // const vpcInfo = makeVpcInfo(objVpcData.name, cidrBlock)
-    //     const terraformText = subnetInfo + vpcInfo
-
-    //     const title = 'main.tf';
-    //     const blobType = 'text/plain';
-
-    //     const linkTagId = 'getLocal';
-    //     const linkTag = document.getElementById(linkTagId);
-    //     const linkTagAttr = ['href', 'download'];
-
-    //     const msSave = window.navigator;
-
-    //     const stringObject = new Blob([terraformText], { type: blobType });
-    //     const objectURL = window.URL.createObjectURL(stringObject)
-
-    //     linkTag?.setAttribute(linkTagAttr[0], objectURL)
-    //     linkTag?.setAttribute(linkTagAttr[1], title)
-    // }
 
     return (
         <div className="homePage">
@@ -173,8 +113,7 @@ export const Home: VFC = () => {
                 </div>
             </div>
             <div className="buttonArea">
-                <a href="#" id="getLocal" onClick={makeTerraformFile}>makeFromState</a>
-                <a href="#" id="getLocal" onClick={MakeTestFile}>ダウンロード</a>
+                <a href="#" id="getLocal" onClick={makeTerraformFile}>ダウンロード</a>
             </div>
         </div>
     )
