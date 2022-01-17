@@ -4,6 +4,8 @@ import { Select } from '../components/Select'
 import { Subnet, Vpc } from '../types/types'
 import { json } from 'express'
 import axios from 'axios'
+import { makeSubnetInfo } from '../terraform/subnet'
+import { makeVpcInfo } from '../terraform/vpc'
 
 export const Home: VFC = () => {
     const azList = ["ap-northeast-1a", "ap-northeast-1c", "ap-northeast-1d"] 
@@ -57,80 +59,6 @@ export const Home: VFC = () => {
         return [objVpcData, objSubnetData]
     }
 
-    // const makeTextFile = () => {
-    //     const [objVpcData, objSubnetData] = convertObjData();
-
-    //     const string = "ダウンロードできたかな？"
-
-    //     const title = 'testfile.tf';
-    //     const blobType = 'text/plain';
-
-    //     const linkTagId = 'getLocal';
-    //     const linkTag = document.getElementById(linkTagId);
-    //     const linkTagAttr = ['href', 'download'];
-
-    //     const msSave = window.navigator;
-
-    //     const stringObject = new Blob([string], { type: blobType });
-    //     const objectURL = window.URL.createObjectURL(stringObject)
-
-    //     linkTag?.setAttribute(linkTagAttr[0], objectURL)
-    //     linkTag?.setAttribute(linkTagAttr[1], title)
-    // }
-
-    // const testAxios = () => {
-    //     axios
-    //     .get('http://localhost:5000/tf/postAllData')             //リクエストを飛ばすpath
-    //     .then(response => {
-    //         console.log(response.data);
-    //     })                               //成功した場合、postsを更新する（then）
-    //     .catch(() => {
-    //         console.log('通信に失敗しました');
-    //     });               
-    // }
-
-    const sendAllData = () => {
-        const [objVpcData, objSubnetData] = convertObjData();
-        axios.post('http://localhost:5000/tf/postAllData', {
-            withCredentials: true,
-            vpc: objVpcData,
-            subnet: objSubnetData
-            })
-            .then(function (response) {
-            console.log(response);
-            })
-            .catch(function (error) {
-            console.log(error);
-            });
-    }
-
-    const consoleTestFile = () => {
-        axios
-        .get('http://localhost:5000/tf/testMakeFile')             //リクエストを飛ばすpath
-        .then(response => {
-            console.log(response.data);
-        })                               //成功した場合、postsを更新する（then）
-        .catch(() => {
-            console.log('通信に失敗しました');
-        });               
-    }
-
-    const consoleTf = () => {
-        const [objVpcData, objSubnetData] = convertObjData();
-        console.log(objVpcData, objSubnetData)
-        axios.post('http://localhost:5000/tf/consoleTf', {
-            withCredentials: true,
-            vpc: objVpcData,
-            subnet: objSubnetData
-            })
-            .then(function (response) {
-            console.log(response);
-            })
-            .catch(function (error) {
-            console.log(error);
-            });
-    }
-
 
 
     const MakeTestFile = () => {
@@ -159,8 +87,6 @@ export const Home: VFC = () => {
         const linkTag = document.getElementById(linkTagId);
         const linkTagAttr = ['href', 'download'];
 
-        // const string = "hello"
-
         const msSave = window.navigator;
 
         const stringObject = new Blob([terraformText], { type: blobType });
@@ -169,6 +95,67 @@ export const Home: VFC = () => {
         linkTag?.setAttribute(linkTagAttr[0], objectURL)
         linkTag?.setAttribute(linkTagAttr[1], title)
     }
+
+    
+    const makeTerraformText = () => {
+        const [
+            vpcName,
+            vpcCidrBlock,
+            subnetCidrBlock,
+            availabilityZone,
+            publicIpOnLaunch
+        ] = [
+            vpcData.name,
+            vpcData.cidrBlock,
+            subnetData.availabilityZone,
+            subnetData.cidrBlock,
+            subnetData.isPublicIp
+            ]
+
+        const vpcInfo = makeVpcInfo(
+            vpcName,
+            vpcCidrBlock
+        )
+
+        const subnetInfo = makeSubnetInfo(
+            vpcName,
+            subnetCidrBlock,
+            availabilityZone,
+            publicIpOnLaunch
+        )
+
+        const terraformText = vpcInfo + subnetInfo
+
+        return terraformText
+    }
+
+    const makeTerraformFile = () => {
+        const terraformText = makeTerraformText()
+        makeFile(terraformText)
+    }
+
+    // const makeTerraformFile = () => {
+    //     const [objVpcData, objSubnetData] = convertObjData();
+        
+    //     // const subnetInfo = makeSubnetInfo(objVpcData.name, subnetCidrBlock, availabilityZone, publicIpOnLaunch)
+    //     // const vpcInfo = makeVpcInfo(objVpcData.name, cidrBlock)
+    //     const terraformText = subnetInfo + vpcInfo
+
+    //     const title = 'main.tf';
+    //     const blobType = 'text/plain';
+
+    //     const linkTagId = 'getLocal';
+    //     const linkTag = document.getElementById(linkTagId);
+    //     const linkTagAttr = ['href', 'download'];
+
+    //     const msSave = window.navigator;
+
+    //     const stringObject = new Blob([terraformText], { type: blobType });
+    //     const objectURL = window.URL.createObjectURL(stringObject)
+
+    //     linkTag?.setAttribute(linkTagAttr[0], objectURL)
+    //     linkTag?.setAttribute(linkTagAttr[1], title)
+    // }
 
     return (
         <div className="homePage">
@@ -186,11 +173,7 @@ export const Home: VFC = () => {
                 </div>
             </div>
             <div className="buttonArea">
-                {/* <button onClick={handleSaveData}>保存</button> */}
-                <button onClick={sendAllData}>送信</button>
-                <button onClick={consoleTestFile}>testMakeFile</button>
-                <button onClick={consoleTf}>consoleTf</button>
-                <button onClick={MakeTestFile}>MakeTestFile</button>
+                <a href="#" id="getLocal" onClick={makeTerraformFile}>makeFromState</a>
                 <a href="#" id="getLocal" onClick={MakeTestFile}>ダウンロード</a>
             </div>
         </div>

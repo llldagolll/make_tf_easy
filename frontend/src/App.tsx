@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Home } from './templates/Home';
+import { Home } from './pages/Home';
 
 const keyNameList = [
   "vpcCidrBlock",
