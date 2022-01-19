@@ -13,7 +13,7 @@ export const FormControl = (props: any) => {
     return (
         <div className={props.className}>
             <label>{props.label}</label>
-            <input value={props.value} type="text" placeholder={props.placeholder} name={props.name} onChange={(e) => props.onChange(e, props.stateKey)} />
+            <input value={props.value} type="text" placeholder={props.placeHolder} name={props.name} onChange={(e) => props.onChange(e, props.name)} />
         </div>
     )
 }
