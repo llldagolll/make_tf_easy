@@ -1,5 +1,5 @@
 export type Vpc = {
-    name: string
+    vpcName: string
     cidrBlock: string
 }
 

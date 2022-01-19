@@ -13,7 +13,7 @@ export const Home: VFC = () => {
 
 
     const [vpcData, setVpcData] = useState<Vpc>({
-        vpcName: "",
+        name: "",
         cidrBlock: ""
     })
 
@@ -67,7 +67,7 @@ export const Home: VFC = () => {
             availabilityZone,
             publicIpOnLaunch
         ] = [
-            vpcData.vpcName,
+            vpcData.name,
             vpcData.cidrBlock,
             subnetData.cidrBlock,
             subnetData.availabilityZone,
@@ -103,7 +103,7 @@ export const Home: VFC = () => {
                 <div className="container">
                 <h2>VPCの設定</h2>
                     <FormControl stateKey="cidrBlock" value={vpcData.cidrBlock} label="CIDR BLOCK:" placeholder="10.0.0.0/16" name="cidrBlock" className="formControl" onChange={handleChangeVpc}  />
-                    <FormControl stateKey="name" value={vpcData.vpcName} label="VPC NAME:" placeholder="exampleVPC" name="yourVpcName" onChange={handleChangeVpc} className="formControl" />
+                    <FormControl stateKey="name" value={vpcData.name} label="VPC NAME:" placeholder="exampleVPC" name="yourVpcName" onChange={handleChangeVpc} className="formControl" />
                 </div>
                 <div className="container">
                 <h2>Subnetの設定</h2>
