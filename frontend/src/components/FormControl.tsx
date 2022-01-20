@@ -1,4 +1,4 @@
-import {VFC} from 'react'
+import {useState, VFC} from 'react'
 
 // interface Props {
 //     label: string
@@ -10,10 +10,30 @@ import {VFC} from 'react'
 // }
 
 export const FormControl = (props: any) => {
+    const [focused, setFocused] = useState(false)
+    const handleFocused = (e:any) => {
+        setFocused(true);
+    }
+
+    const {
+        label,
+        errorMessage,
+        onChange,
+        className,
+        name,
+        ...inputProps
+    } = props;
+
     return (
-        <div className={props.className}>
-            <label>{props.label}</label>
-            <input value={props.value} type="text" placeholder={props.placeHolder} name={props.name} onChange={(e) => props.onChange(e, props.name)} />
+        <div className={className}>
+            <label>{label}</label>
+            <input
+                {...inputProps}
+                onChange={(e) => onChange(e, name)}
+                onBlur={handleFocused}
+                focused={focused.toString()}
+            />
+            <span>{errorMessage}</span>
         </div>
     )
 }

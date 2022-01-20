@@ -69,8 +69,8 @@ export const Home: VFC = () => {
             publicIpOnLaunch
         ] = [
             vpcData.vpcName,
-            vpcData.cidrBlock,
-            subnetData.cidrBlock,
+            vpcData.vpcCidrBlock,
+            subnetData.subnetCidrBlock,
             subnetData.availabilityZone,
             subnetData.isPublicIp
             ]
@@ -102,16 +102,21 @@ export const Home: VFC = () => {
             id: 1,
             name: "vpcName",
             type: "text",
-            placeHolder: "exampleVpc",
+            placeholder: "exampleVpc",
+            errorMessage: "vpc名を入力してください",
             label: "vpcName ",
+            required:true,
             className: "formControl",
         },
         {
             id: 2,
             name: "vpcCidrBlock",
             type: "text",
-            placeHolder: "10.0.0.0/16",
+            placeholder: "10.0.0.0/16",
+            errorMessage: "不適切な値です。",
             label: "vpcCidrBlock",
+            required:true,
+            pattern: "(([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\/[0-3][0-2]",
             className: "formControl",
         },
     ]
@@ -121,34 +126,56 @@ export const Home: VFC = () => {
             id: 1,
             name: "subnetCidrBlock",
             type: "text",
-            placeHolder: "10.0.0.0/24",
+            placeholder: "10.0.0.0/24",
+            errorMessage: "不適切な値です。",
             label: "subnetCidrBlock",
+            required:true,
+            pattern: "(([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\/[0-3][0-2]",
             className: "formControl",
         },
     ]
 
 
     return (
-        <div className="homePage">
-            <div className="wrapper">
-                <div className="container">
-                <h2>VPCの設定</h2>
-                    {vpcInputs.map((input: {id: number, name: string}) => (
-                        <FormControl key={input.id} {...input} value={vpcData[input.name]} onChange={handleChangeVpc} />
-                    ))}
-                <div className="container">
-                <h2>Subnetの設定</h2>
+        <div className="app">
+            <form action="">
+
+            <h2>VPCの設定</h2>
+                {vpcInputs.map((input: {id: number, name: string}) => (
+                    <FormControl
+                        key={input.id} {...input}
+                        value={vpcData[input.name]}
+                        onChange={handleChangeVpc}
+                    />
+                ))}
+            <h2>Subnetの設定</h2>
+                <div id="marginForAtag">
                     {subnetInputs.map((input: {id: number, name: string}) => (
-                        <FormControl key={input.id} {...input} value={subnetData[input.name]} onChange={handleChangeSubnet} />
+                        <FormControl
+                            key={input.id} {...input}
+                            value={subnetData[input.name]}
+                            onChange={handleChangeSubnet}
+                        />
                     ))}
-                    <Select stateKey="availabilityZone" label="AvailabilityZone:" options={azList} value={subnetData.availabilityZone} onChange={handleChangeSubnet} />
-                    <Select stateKey="isPublicIp" label="PublicIpOnLaunch:" options={isPublicIp} value={subnetData.isPublicIp} onChange={handleChangeSubnet} />
+                    <Select
+                        stateKey="availabilityZone"
+                        label="AvailabilityZone:"
+                        options={azList}
+                        value={subnetData.availabilityZone}
+                        onChange={handleChangeSubnet}
+                    />
+                    <Select
+                        stateKey="isPublicIp"
+                        label="PublicIpOnLaunch:"
+                        options={isPublicIp}
+                        value={subnetData.isPublicIp}
+                        onChange={handleChangeSubnet}
+                    />
                 </div>
-            </div>
-            <div className="buttonArea">
-                <a href="#" id="getLocal" onClick={makeTerraformFile}>ダウンロード</a>
-            </div>
-        </div>
+                <div id="centerA">
+                    <a href="#" id="getLocal"  onClick={makeTerraformFile}>ダウンロード</a>
+                </div>
+            </form>
         </div>
     )
 }
