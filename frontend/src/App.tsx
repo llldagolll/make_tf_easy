@@ -19,7 +19,6 @@ const keyNameList = [
 function App() {
   return (
     <>
-      {/* <Home /> */}
       <AmplifySignOut />
       <Home />
       </>
