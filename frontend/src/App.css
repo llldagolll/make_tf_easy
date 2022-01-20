@@ -1,33 +1,81 @@
-.homePage {
-  height: 100vh;
-  width: 100vw;
-}
-.wrapper {
-  height: 80%;
-  width: 100%;
+.formControl{
   display: flex;
-  /* flex-direction: column; */
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
 }
 
-.buttonArea {
-  height: 20%;
-  display: flex;
-  /* flex-direction: column; */
-  justify-content: center;
-  align-items: start;
-}
-
-.container {
-  margin: 0 50px;
-}
-
-.container h2 {
-  text-align: center;
-}
 .formControl label,
 .formControl input {
   margin: 10px;
   padding: 10px;
+}
+
+
+
+.app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.7),
+      rgba(255, 255, 255, 0.3)
+    ),
+    url("https://images.pexels.com/photos/114979/pexels-photo-114979.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500");
+  background-size: cover;
+  background-position: center;
+}
+
+form{
+    background-color: white;
+    padding: 10px 60px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+select{
+    padding: auto;
+    margin: 10px;
+}
+
+h1{
+    color: rgb(77, 1, 77);
+    text-align: center;
+}
+
+a {
+    width: 100%;
+    height: 50px;
+    padding: 10px;
+    border: none;
+    background-color: rebeccapurple;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+span {
+  font-size: 12px;
+  padding:3px;
+  color:red;
+  display: none;
+}
+
+input:invalid[focused="true"] ~ span {
+  display: block;
+}
+
+input:invalid[focused="true"] {
+  border: 1px solid red;
+}
+
+#marginForAtag {
+  margin:10px;
+}
+
+#centerA {
+  text-align: center;
 }
