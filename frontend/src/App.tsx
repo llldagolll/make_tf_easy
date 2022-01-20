@@ -1,6 +1,11 @@
 import React from 'react';
 import './App.css';
 import { Home } from './pages/Home';
+import Amplify from 'aws-amplify'
+import awsconfig from './aws-exports'
+import { AmplifySignOut, withAuthenticator } from '@aws-amplify/ui-react'
+
+Amplify.configure(awsconfig)
 
 const keyNameList = [
   "vpcCidrBlock",
@@ -13,8 +18,12 @@ const keyNameList = [
 
 function App() {
   return (
-    <Home />
+    <>
+      {/* <Home /> */}
+      <AmplifySignOut />
+      <Home />
+      </>
   );
 }
 
-export default App; 
+export default withAuthenticator( App ); 
