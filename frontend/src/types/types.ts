@@ -1,13 +1,33 @@
 export type Vpc = {
+    [key: string]: string
     vpcName: string
-    cidrBlock: string
+    vpcCidrBlock: string
 }
 
 export type Subnet = {
-        cidrBlock: string
-        availabilityZone: string
-        isPublicIp: string
+    [key: string]: string
+    subnetCidrBlock: string
+    availabilityZone: string
+    isPublicIp: string
 }
+
+
+
+// export interface FormValues  {
+//     vpcName: string
+//     vpcCidrBlock: string
+//     subnetCidrBlock: string
+//     availabilityZone: string
+//     isPublicIp: string
+// }
+export type FormValues = {
+    [key: string]: string
+    vpcCidrBlock: string
+    subnetCidrBlock: string
+    availabilityZone: string
+    isPublicIp: string
+}
+
 
 export type TemplateSubnet = (
     vpcName: string,
