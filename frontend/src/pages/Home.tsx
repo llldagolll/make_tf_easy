@@ -1,9 +1,7 @@
 import {VFC, useState} from 'react'
 import { FormControl } from '../components/FormControl'
 import { Select } from '../components/Select'
-import { FormValues, Subnet, Vpc } from '../types/types'
-import { json } from 'express'
-import axios from 'axios'
+import { Subnet, Vpc } from '../types/types'
 import { makeSubnetInfo } from '../terraform/subnet'
 import { makeVpcInfo } from '../terraform/vpc'
 
