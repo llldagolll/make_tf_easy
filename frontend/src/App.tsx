@@ -7,14 +7,6 @@ import { AmplifySignOut, withAuthenticator } from '@aws-amplify/ui-react'
 
 Amplify.configure(awsconfig)
 
-const keyNameList = [
-  "vpcCidrBlock",
-  "vpcName",
-  "AvailabilityZone",
-  "subnetCidrBlock",
-  "publicIpAddressOnLaunch",
-]
-
 
 function App() {
   return (
