@@ -11,6 +11,7 @@ services:
     tty: true
     volumes:
       - ./app/frontend:/app
+      - front_node_modules_volume:/app/node_modules
   
   backend:
     container_name: tf-nest
@@ -23,12 +24,14 @@ services:
     tty: true
     volumes:
       - ./app/backend:/app
-    
+      - back_node_modules_volume:/app/node_modules
+  
+
   db:
     image: postgres:latest
     container_name: tf-postgres
     volumes:
-    - ./data/var/lib/postgresql/data
+    - ./data:/var/lib/postgresql/data
     ports:
     - ${HDBPORT}:${CDBPORT}
     environment: 
@@ -36,4 +39,6 @@ services:
       POSTGRES_PASSWORD: ${DBPASSWORD}
       POSTGRES_DB: ${POSTGRESDB}
 
-
+volumes:
+  front_node_modules_volume:
+  back_node_modules_volume:

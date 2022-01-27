@@ -8,6 +8,7 @@ async function bootstrap() {
     const configService = app.get(config_1.ConfigService);
     const port = configService.get('PORT');
     const dbUrl = configService.get('DATABASE_URL');
+    console.log(port);
     console.log(dbUrl);
     await app.listen(port);
 }
