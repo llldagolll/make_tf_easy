@@ -12,6 +12,9 @@ const config_1 = require("@nestjs/config");
 const test_module_1 = require("./api/test/test.module");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
+const auth_controller_1 = require("./auth/auth.controller");
+const auth_module_1 = require("./auth/auth.module");
+const users_module_1 = require("./users/users.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -21,9 +24,11 @@ AppModule = __decorate([
             config_1.ConfigModule.forRoot({
                 isGlobal: true,
                 envFilePath: '.env'
-            })
+            }),
+            auth_module_1.AuthModule,
+            users_module_1.UsersModule,
         ],
-        controllers: [app_controller_1.AppController],
+        controllers: [app_controller_1.AppController, auth_controller_1.AuthController],
         providers: [app_service_1.AppService],
     })
 ], AppModule);
