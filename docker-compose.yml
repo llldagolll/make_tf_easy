@@ -1,0 +1,44 @@
+version: '3'
+services:
+  frontend:
+    container_name: tf-react
+    build: 
+      context: .
+      dockerfile: ./docker/frontend/Dockerfile
+    ports:
+      - ${HFRONTPORT}:${CFRONTPORT}
+    restart: always
+    tty: true
+    volumes:
+      - ./app/frontend:/app
+      - front_node_modules_volume:/app/node_modules
+  
+  backend:
+    container_name: tf-nest
+    build: 
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+    ports:
+      - ${HBACKPORT}:${CBACKPORT}
+    restart: always
+    tty: true
+    volumes:
+      - ./app/backend:/app
+      - back_node_modules_volume:/app/node_modules
+  
+
+  db:
+    image: postgres:latest
+    container_name: tf-postgres
+    volumes:
+    - ./data:/var/lib/postgresql/data
+    ports:
+    - ${HDBPORT}:${CDBPORT}
+    environment: 
+      POSTGRES_USER: ${DBUSER}
+      POSTGRES_PASSWORD: ${DBPASSWORD}
+      POSTGRES_DB: ${POSTGRESDB}
+
+volumes:
+  front_node_modules_volume:
+  back_node_modules_volume:
