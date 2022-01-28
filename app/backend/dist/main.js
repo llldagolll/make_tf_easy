@@ -4,12 +4,9 @@ const core_1 = require("@nestjs/core");
 const app_module_1 = require("./app.module");
 const config_1 = require("@nestjs/config");
 async function bootstrap() {
-    const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    const app = await core_1.NestFactory.create(app_module_1.AppModule, { cors: true });
     const configService = app.get(config_1.ConfigService);
     const port = configService.get('PORT');
-    const dbUrl = configService.get('DATABASE_URL');
-    console.log(port);
-    console.log(dbUrl);
     await app.listen(port);
 }
 bootstrap();

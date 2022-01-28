@@ -1,4 +1,4 @@
 export declare class TestController {
-    getHello(): string;
+    getHello(req: any): string;
     postHello(): string;
 }
