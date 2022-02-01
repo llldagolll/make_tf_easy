@@ -8,23 +8,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
 let UsersService = class UsersService {
-    constructor() {
-        this.users = [
-            {
-                userId: 1,
-                username: 'john',
-                password: 'changeme',
-            },
-            {
-                userId: 2,
-                username: 'maria',
-                password: 'guess',
-            }
-        ];
+    async findAllUsers() {
+        const users = await prisma.users.findMany();
+        console.dir(users, { depth: null });
+        return users;
     }
-    async findOne(username) {
-        return this.users.find(user => user.username === username);
+    async findOneByUsername(username) {
+        const user = await prisma.users.findUnique({
+            where: {
+                name: username,
+            },
+        });
+        return user;
+    }
+    async createUser(username, password) {
+        const user = await prisma.users.create({
+            data: {
+                name: username,
+                password: password,
+            },
+        });
+        console.log(user);
     }
 };
 UsersService = __decorate([

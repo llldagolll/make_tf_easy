@@ -2,8 +2,10 @@ import { Controller, Post, UseGuards, Request, Get } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
-import { JwtAuthGuard } from './jwt.auth.guard';
+import { JwtAuthGuard } from './jwt/jwt.auth.guard';
 import { LocalAuthGuard } from './local.auth.guard';
+import * as bcrypt from 'bcryptjs';
+
 
 @Controller('auth')
 export class AuthController {
