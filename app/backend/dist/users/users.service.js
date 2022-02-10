@@ -5,37 +5,41 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
-const client_1 = require("@prisma/client");
-const prisma = new client_1.PrismaClient();
+const prisma_service_1 = require("../prisma/prisma.service");
 let UsersService = class UsersService {
-    async findAllUsers() {
-        const users = await prisma.users.findMany();
-        console.dir(users, { depth: null });
-        return users;
+    constructor(prisma) {
+        this.prisma = prisma;
     }
-    async findOneByUsername(username) {
-        const user = await prisma.users.findUnique({
-            where: {
-                name: username,
-            },
+    async user(userWhereUniqueInput) {
+        return this.prisma.User.findUnique({
+            where: userWhereUniqueInput,
         });
-        return user;
     }
-    async createUser(username, password) {
-        const user = await prisma.users.create({
-            data: {
-                name: username,
-                password: password,
-            },
+    async User(params) {
+        const { skip, take, cursor, where, orderBy } = params;
+        return this.prisma.User.findMany({
+            skip,
+            take,
+            cursor,
+            where,
+            orderBy,
         });
-        console.log(user);
+    }
+    async createUser(data) {
+        return this.prisma.User.create({
+            data,
+        });
     }
 };
 UsersService = __decorate([
-    (0, common_1.Injectable)()
+    (0, common_1.Injectable)(),
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], UsersService);
 exports.UsersService = UsersService;
 //# sourceMappingURL=users.service.js.map

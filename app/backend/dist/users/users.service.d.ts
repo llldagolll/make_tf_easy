@@ -1,6 +1,15 @@
-export declare type User = any;
+import { Prisma, User } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 export declare class UsersService {
-    findAllUsers(): Promise<import(".prisma/client").users[]>;
-    findOneByUsername(username: string): Promise<import(".prisma/client").users>;
-    createUser(username: string, password: string): Promise<void>;
+    private prisma;
+    constructor(prisma: PrismaService);
+    user(userWhereUniqueInput: Prisma.UserWhereUniqueInput): Promise<User | null>;
+    User(params: {
+        skip?: number;
+        take?: number;
+        cursor?: Prisma.UserWhereUniqueInput;
+        where?: Prisma.UserWhereInput;
+        orderBy?: Prisma.UserOrderByWithRelationInput;
+    }): Promise<User[]>;
+    createUser(data: Prisma.UserCreateInput): Promise<User>;
 }
