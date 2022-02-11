@@ -4,6 +4,7 @@ import {
   User,
   Prisma
 } from '@prisma/client'
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UserService {
@@ -18,7 +19,8 @@ export class UserService {
     return this.prisma.user.findMany()
   }
 
-  async createUser(data: Prisma.UserCreateInput): Promise<User> {
+  async createUser(data: CreateUserDto): Promise<User> {
+    // here is code for hashing your password ex. hash(data.password)
     return this.prisma.user.create({
       data,
     });
