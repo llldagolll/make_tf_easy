@@ -5,10 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from './prisma/prisma.service';
-import { UserService } from './user/user.service';
-import { PostService } from './post/post.service';
-import { PostController } from './post/post.controller';
-import { PostModule } from './post/post.module';
+import { UserService } from './/user/user.service';
 import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
 
@@ -19,10 +16,9 @@ import { UserModule } from './user/user.module';
       isGlobal: true,
       envFilePath: '.env'
     }),
-    PostModule,
     UserModule,
   ],
-  controllers: [AppController, PostController, UserController],
-  providers: [AppService, PrismaService, UserService, PostService],
+  controllers: [AppController, UserController],
+  providers: [AppService, PrismaService, UserService],
 })
 export class AppModule { }

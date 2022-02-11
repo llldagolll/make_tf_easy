@@ -8,8 +8,6 @@ import { skip } from 'rxjs';
 export class UserController {
   constructor(
     private readonly userService: UserService,
-    private readonly prismaService: PrismaService,
-
   ) { }
 
   @Get('users')
@@ -25,7 +23,7 @@ export class UserController {
 
   @Post('/signup')
   async signupUser(
-    @Body() userData: { name?: string; email: string },
+    @Body() userData: { name?: string; email: string, password: string },
   ): Promise<UserModel> {
     return this.userService.createUser(userData);
   }

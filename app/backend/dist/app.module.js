@@ -13,10 +13,7 @@ const test_module_1 = require("./api/test/test.module");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const prisma_service_1 = require("./prisma/prisma.service");
-const user_service_1 = require("./user/user.service");
-const post_service_1 = require("./post/post.service");
-const post_controller_1 = require("./post/post.controller");
-const post_module_1 = require("./post/post.module");
+const user_service_1 = require(".//user/user.service");
 const user_controller_1 = require("./user/user.controller");
 const user_module_1 = require("./user/user.module");
 let AppModule = class AppModule {
@@ -29,11 +26,10 @@ AppModule = __decorate([
                 isGlobal: true,
                 envFilePath: '.env'
             }),
-            post_module_1.PostModule,
             user_module_1.UserModule,
         ],
-        controllers: [app_controller_1.AppController, post_controller_1.PostController, user_controller_1.UserController],
-        providers: [app_service_1.AppService, prisma_service_1.PrismaService, user_service_1.UserService, post_service_1.PostService],
+        controllers: [app_controller_1.AppController, user_controller_1.UserController],
+        providers: [app_service_1.AppService, prisma_service_1.PrismaService, user_service_1.UserService],
     })
 ], AppModule);
 exports.AppModule = AppModule;
