@@ -4,7 +4,7 @@ ENV LANG C.UTF-8
 ENV TZ Asia/Tokyo
 
 RUN npm i -g npm  \ 
-    && yarn add package.json\
+    && yarn\
     && apt-get update \
     && apt-get install -y libssl-dev \
     && yarn global add @nestjs/cli \

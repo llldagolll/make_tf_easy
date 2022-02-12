@@ -4,6 +4,8 @@ import {
   User,
   Prisma
 } from '@prisma/client'
+import { CreateUserDto } from './dto/create-user.dto';
+import * as bcrypt from 'bcryptjs'
 
 @Injectable()
 export class UserService {
@@ -18,9 +20,14 @@ export class UserService {
     return this.prisma.user.findMany()
   }
 
-  async createUser(data: Prisma.UserCreateInput): Promise<User> {
+  async createUser(data: CreateUserDto): Promise<any> {
+    // here is code for hashing your password ex. hash(data.password)
     return this.prisma.user.create({
-      data,
+      data: {
+        password: await bcrypt.hash(data.password, 12),
+        name: data.name,
+        email: data.email,
+      }
     });
   }
 
