@@ -8,21 +8,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
-const users_service_1 = require("src/users/users.service");
 const jwt_1 = require("@nestjs/jwt");
+const user_service_1 = require("../user/user.service");
 const bcrypt = require("bcryptjs");
 let AuthService = class AuthService {
-    constructor(usersService, jwtService) {
-        this.usersService = usersService;
+    constructor(jwtService, userService) {
         this.jwtService = jwtService;
+        this.userService = userService;
     }
-    async validateUser({ username, password }) {
-        const user = await this.usersService.findOneByUsername(username);
-        console.log(user);
+    async validateUser({ email, password }) {
+        const user = await this.userService.user({ email });
         const isValid = await bcrypt.compare(password, user.password);
         if (!isValid) {
             throw new common_1.UnauthorizedException('Invalid credentials');
@@ -31,16 +29,17 @@ let AuthService = class AuthService {
     }
     async login(user) {
         if (await this.validateUser(user)) {
-            const payload = { username: user.username };
+            const payload = { name: user.name };
             return {
-                'access_token': this.jwtService.sign(payload),
+                'access_token': this.jwtService.sign(payload)
             };
         }
     }
 };
 AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [typeof (_a = typeof users_service_1.UsersService !== "undefined" && users_service_1.UsersService) === "function" ? _a : Object, jwt_1.JwtService])
+    __metadata("design:paramtypes", [jwt_1.JwtService,
+        user_service_1.UserService])
 ], AuthService);
 exports.AuthService = AuthService;
 //# sourceMappingURL=auth.service.js.map
