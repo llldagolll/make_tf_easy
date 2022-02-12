@@ -4,7 +4,7 @@ ENV LANG C.UTF-8
 ENV TZ Asia/Tokyo
 
 RUN npm i -g npm  \ 
-    && yarn package.json \
+    && yarn \
     && apt-get update \
     && apt-get install -y libssl-dev \
     && apt-get clean \

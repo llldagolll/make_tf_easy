@@ -9,7 +9,7 @@ export class CreateUserDto {
   @IsString()
   @MinLength(1)
   @MaxLength(20)
-  readonly username: string;
+  readonly name: string;
 
   @IsString()
   @MinLength(8)
