@@ -10,7 +10,7 @@ import * as bcrypt from 'bcryptjs'
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) { }
-  async user(userWhereUniqueInput: Prisma.UserWhereUniqueInput): Promise<User | null> {
+  async findOne(userWhereUniqueInput: { username: string }): Promise<User | null> {
     return this.prisma.user.findUnique({
       where: userWhereUniqueInput,
     });
@@ -24,9 +24,9 @@ export class UserService {
     // here is code for hashing your password ex. hash(data.password)
     return this.prisma.user.create({
       data: {
-        password: await bcrypt.hash(data.password, 12),
-        name: data.name,
-        email: data.email,
+        // password: await bcrypt.hash(data.password, 12),
+        password: data.password,
+        username: data.username,
       }
     });
   }
