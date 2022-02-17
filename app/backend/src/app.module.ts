@@ -8,6 +8,9 @@ import { PrismaService } from './prisma/prisma.service';
 import { UserService } from './/user/user.service';
 import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
+import { AuthService } from './auth/auth.service';
+import { AuthController } from './auth/auth.controller';
 
 @Module({
   imports: [
@@ -17,8 +20,9 @@ import { UserModule } from './user/user.module';
       envFilePath: '.env'
     }),
     UserModule,
+    AuthModule,
   ],
-  controllers: [AppController, UserController],
-  providers: [AppService, PrismaService, UserService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule { }

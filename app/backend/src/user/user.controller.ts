@@ -14,9 +14,14 @@ export class UserController {
     return this.userService.users()
   }
 
-  @Get(':id')
-  async getUserById(@Param('id') id: string): Promise<UserModel> {
-    return this.userService.user({ id: Number(id) })
+  // @Get(':id')
+  // async getUserById(@Param('id') id: string): Promise<UserModel> {
+  //   return this.userService.findOne({ id: Number(id) })
+  // }
+
+  @Get(':username')
+  async getUserByUsername(@Param('username') username: string): Promise<UserModel> {
+    return this.userService.findOne({ username })
   }
 
 
@@ -27,8 +32,15 @@ export class UserController {
     return this.userService.createUser(userData);
   }
 
+  @Delete(':username')
+  async deleteUserByUsername(
+    @Param('username') username: string
+  ): Promise<UserModel> {
+    return this.userService.deleteUser({ username });
+  }
+
   @Delete(':id')
-  async delenteUser(
+  async deleteUserById(
     @Param('id') id: string
   ): Promise<UserModel> {
     return this.userService.deleteUser({ id: Number(id) });
@@ -38,15 +50,15 @@ export class UserController {
   async updateUser(
     @Param('id') id: string,
     @Body() userData: {
-      name?: string,
-      email?: string,
+      username?: string,
+      password?: string,
     }
   ): Promise<UserModel> {
     return this.userService.updateUser({
       where: { id: Number(id) },
       data: {
-        name: userData?.name,
-        email: userData.email
+        username: userData?.username,
+        password: userData?.password
       }
     })
   }

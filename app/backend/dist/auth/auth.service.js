@@ -8,39 +8,46 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a;
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
-const users_service_1 = require("src/users/users.service");
 const jwt_1 = require("@nestjs/jwt");
-const bcrypt = require("bcryptjs");
+const user_service_1 = require("../user/user.service");
 let AuthService = class AuthService {
-    constructor(usersService, jwtService) {
-        this.usersService = usersService;
+    constructor(userService, jwtService) {
+        this.userService = userService;
         this.jwtService = jwtService;
     }
-    async validateUser({ username, password }) {
-        const user = await this.usersService.findOneByUsername(username);
-        console.log(user);
-        const isValid = await bcrypt.compare(password, user.password);
-        if (!isValid) {
-            throw new common_1.UnauthorizedException('Invalid credentials');
+    async validateUser(username, pass) {
+        const user = await this.userService.findOne({ username });
+        if (user && user.password === pass) {
+            const { password } = user, result = __rest(user, ["password"]);
+            return result;
         }
-        return isValid;
+        return null;
     }
     async login(user) {
-        if (await this.validateUser(user)) {
-            const payload = { username: user.username };
-            return {
-                'access_token': this.jwtService.sign(payload),
-            };
-        }
+        const payload = { username: user.username, sub: user.userId };
+        return {
+            access_token: this.jwtService.sign(payload)
+        };
     }
 };
 AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [typeof (_a = typeof users_service_1.UsersService !== "undefined" && users_service_1.UsersService) === "function" ? _a : Object, jwt_1.JwtService])
+    __metadata("design:paramtypes", [user_service_1.UserService,
+        jwt_1.JwtService])
 ], AuthService);
 exports.AuthService = AuthService;
 //# sourceMappingURL=auth.service.js.map
