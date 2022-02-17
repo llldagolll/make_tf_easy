@@ -22,10 +22,11 @@ export class UserService {
 
   async createUser(data: CreateUserDto): Promise<any> {
     // here is code for hashing your password ex. hash(data.password)
+    const saltOrRounds = 12;
     return this.prisma.user.create({
       data: {
-        // password: await bcrypt.hash(data.password, 12),
-        password: data.password,
+        password: await bcrypt.hash(data.password, saltOrRounds),
+        // password: data.password,
         username: data.username,
       }
     });

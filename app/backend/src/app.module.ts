@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { TestModule } from './api/test/test.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { JwtService } from '@nestjs/jwt';
@@ -14,7 +13,6 @@ import { AuthController } from './auth/auth.controller';
 
 @Module({
   imports: [
-    TestModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env'
